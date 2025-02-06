@@ -1,0 +1,18 @@
+<div class="text-center">
+    <h1 class="font-bold">Your Favourite Dishes</h1>
+    @if (favouriteList.length > 0) {
+        <table>
+            @for (meal of favouriteList; track $index) {
+                <tr>
+                    <td>
+                        <app-meal [meal]="meal"></app-meal>
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+    @else {
+        <h1 class="pt-5">oops, looks like your list is empty! </h1>
+        <p class="pt-1">._.'</p>
+    }
+</div>
