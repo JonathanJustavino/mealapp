@@ -18,10 +18,10 @@
                         <app-meal (add)="onAdd($event)" (remove)="onRemove($event)" [meal]="mealPage[index]" [size]="2"></app-meal>
                     </td>
                     <td *ngIf="mealPage[index + 1]">
-                         <app-meal [meal]="mealPage[index + 1]" [size]="2"></app-meal>
+                        <app-meal (add)="onAdd($event)" (remove)="onRemove($event)" [meal]="mealPage[index + 1]" [size]="2"></app-meal>
                     </td>
                     <td *ngIf="mealPage[index + 2]">
-                         <app-meal [meal]="mealPage[index + 2]" [size]="2"></app-meal>
+                        <app-meal (add)="onAdd($event)" (remove)="onRemove($event)" [meal]="mealPage[index + 2]" [size]="2"></app-meal>
                     </td>
                 </tr>
             }
