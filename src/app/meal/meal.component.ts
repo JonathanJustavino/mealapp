@@ -1,5 +1,5 @@
 import { Component, computed, Input } from '@angular/core';
-import { Meal } from '../data/meal';
+import { Meal } from '../data/meal.model';
 import { IconType, NgIconComponent } from '@ng-icons/core';
 import { bootstrapHeart, bootstrapHeartFill } from '@ng-icons/bootstrap-icons';
 

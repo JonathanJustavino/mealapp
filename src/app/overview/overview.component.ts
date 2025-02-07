@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { MealsService } from '../services/meals.service';
 import { CommonModule } from '@angular/common';
-import { Meal } from '../data/meal';
+import { Meal } from '../data/meal.model';
 import { MealComponent } from '../meal/meal.component';
 
 

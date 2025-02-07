@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Meal } from '../data/meal';
+import { Meal } from '../data/meal.model';
 import { MealComponent } from '../meal/meal.component';
 import { CommonModule } from '@angular/common';
 
