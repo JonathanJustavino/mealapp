@@ -20,7 +20,6 @@ export class RandomMealComponent {
   ngOnInit() {
     this.mealService.getRandom().subscribe((mealData) => {
       this.meal = mealData
-      console.log(mealData)
     });
   }
 

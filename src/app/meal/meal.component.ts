@@ -32,12 +32,10 @@ export class MealComponent {
   toggle() {
     this.liked = !this.liked;
     if (this.liked) {
-      console.log("|Meal Component| id: ", this.meal.idMeal)
       this.buttonIcon = bootstrapHeart;
       this.remove.emit(this.meal.idMeal);
       return
     }
-    console.log("|Meal Component| id: ", this.meal.idMeal)
     this.buttonIcon = bootstrapHeartFill;
     this.add.emit(this.meal.idMeal);
   }

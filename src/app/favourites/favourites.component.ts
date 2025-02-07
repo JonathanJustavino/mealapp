@@ -16,9 +16,6 @@ export class FavouritesComponent {
   sidebarIcon: IconType = bootstrapStar;
 
   @Input() favouriteList: ReadonlyArray<Meal> = [];
-  // @Output() add = new EventEmitter<string>();
 
-  constructor() {
-
-  }
+  constructor() {}
 }

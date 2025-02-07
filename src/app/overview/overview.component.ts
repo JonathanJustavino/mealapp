@@ -61,12 +61,10 @@ export class OverviewComponent {
   }
 
   onAdd(mealId: string) {
-    console.log("add", mealId);
     this.store.dispatch(FavouriteActions.addFavourite({ mealId }));
   }
 
   onRemove(mealId: string) {
-    console.log("remove", mealId);
     this.store.dispatch(FavouriteActions.removeFavourite({ mealId }));
   }
 
