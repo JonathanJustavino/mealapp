@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { Observable } from 'rxjs';
+import { map } from 'rxjs';
 import { Meal } from '../data/meal.model';
 
 @Injectable({
@@ -13,7 +15,7 @@ export class MealsService {
   constructor(private http: HttpClient) {}
 
   getAllMeals(): Observable < Meal[] > {
-    return this.http.get<Meal[]>(`${this.baseUrl}/meals`);
+    return this.http.get<Meal[]>(`${this.baseUrl}/meals`).pipe(map((meals) => meals || []));
   }
 
   getMealPage(page: number, limit: number): Observable < Meal[] > {

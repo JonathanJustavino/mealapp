@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Meal } from '../data/meal.model';
 import { MealComponent } from '../meal/meal.component';
 import { CommonModule } from '@angular/common';
@@ -12,10 +12,13 @@ import { IconType, NgIconComponent } from '@ng-icons/core';
   styleUrl: './favourites.component.css'
 })
 export class FavouritesComponent {
-  @Input() favouriteList: Meal[] = [];
   sidebarLabel: string = "Your Favourites";
   sidebarIcon: IconType = bootstrapStar;
 
+  @Input() favouriteList: ReadonlyArray<Meal> = [];
+  // @Output() add = new EventEmitter<string>();
+
   constructor() {
+
   }
 }

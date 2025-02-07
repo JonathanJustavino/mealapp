@@ -1,7 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Meal } from '../data/meal.model';
 import { IconType, NgIconComponent } from '@ng-icons/core';
 import { bootstrapHeart, bootstrapHeartFill } from '@ng-icons/bootstrap-icons';
+import { Store } from '@ngrx/store';
+import { FavouriteActions } from '../state/favourites.actions';
 
 @Component({
   selector: 'app-meal',
@@ -23,11 +25,21 @@ export class MealComponent {
   @Input() size!: Number;
   @Input() meal!: Meal;
   @Input() minimal?: boolean;
+  @Output() add = new EventEmitter<string>();
+  @Output() remove = new EventEmitter<string>();
 
 
   toggle() {
     this.liked = !this.liked;
-    this.buttonIcon = !this.liked ? bootstrapHeartFill : bootstrapHeart;
+    if (this.liked) {
+      console.log("|Meal Component| id: ", this.meal.idMeal)
+      this.buttonIcon = bootstrapHeart;
+      this.remove.emit(this.meal.idMeal);
+      return
+    }
+    console.log("|Meal Component| id: ", this.meal.idMeal)
+    this.buttonIcon = bootstrapHeartFill;
+    this.add.emit(this.meal.idMeal);
   }
 
   ngOnInit() {
@@ -37,7 +49,7 @@ export class MealComponent {
     this.thumbnail = `http://localhost:3000/image/${this.meal.idMeal}`;
   }
 
-  constructor() {
+  constructor(private store: Store) {
     this.buttonIcon = bootstrapHeart;
   }
 }

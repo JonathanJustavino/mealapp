@@ -1,5 +1,5 @@
 <div class="content">
-    <app-favourites class="">
+    <app-favourites class="" [favouriteList]="(favourites$ | async)!">
     </app-favourites>
     <table>
         <tbody>
@@ -14,9 +14,15 @@
             </tr>
             @for (meal of mealPage; let index = $index; track meal) {
                 <tr *ngIf="index % 3 == 0">
-                    <td *ngIf="mealPage[index]"> <app-meal [meal]="mealPage[index]" [size]="2"></app-meal></td>
-                    <td *ngIf="mealPage[index + 1]"> <app-meal [meal]="mealPage[index + 1]" [size]="2"></app-meal></td>
-                    <td *ngIf="mealPage[index + 2]"> <app-meal [meal]="mealPage[index + 2]" [size]="2"></app-meal></td>
+                    <td *ngIf="mealPage[index]">
+                        <app-meal (add)="onAdd($event)" (remove)="onRemove($event)" [meal]="mealPage[index]" [size]="2"></app-meal>
+                    </td>
+                    <td *ngIf="mealPage[index + 1]">
+                         <app-meal [meal]="mealPage[index + 1]" [size]="2"></app-meal>
+                    </td>
+                    <td *ngIf="mealPage[index + 2]">
+                         <app-meal [meal]="mealPage[index + 2]" [size]="2"></app-meal>
+                    </td>
                 </tr>
             }
         </tbody>
