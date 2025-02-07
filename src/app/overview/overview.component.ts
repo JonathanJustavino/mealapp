@@ -3,11 +3,12 @@ import { MealsService } from '../services/meals.service';
 import { CommonModule } from '@angular/common';
 import { Meal } from '../data/meal.model';
 import { MealComponent } from '../meal/meal.component';
+import { FavouritesComponent } from '../favourites/favourites.component';
 
 
 @Component({
   selector: 'app-overview',
-  imports: [CommonModule, MealComponent],
+  imports: [CommonModule, MealComponent, FavouritesComponent],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.css'
 })

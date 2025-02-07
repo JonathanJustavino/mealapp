@@ -1,4 +1,4 @@
-import { Component, computed, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Meal } from '../data/meal.model';
 import { IconType, NgIconComponent } from '@ng-icons/core';
 import { bootstrapHeart, bootstrapHeartFill } from '@ng-icons/bootstrap-icons';
@@ -22,6 +22,7 @@ export class MealComponent {
 
   @Input() size!: Number;
   @Input() meal!: Meal;
+  @Input() minimal?: boolean;
 
 
   toggle() {
@@ -30,6 +31,9 @@ export class MealComponent {
   }
 
   ngOnInit() {
+    if (this.minimal) {
+      return
+    }
     this.thumbnail = `http://localhost:3000/image/${this.meal.idMeal}`;
   }
 
