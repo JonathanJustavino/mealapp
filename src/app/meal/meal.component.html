@@ -1,7 +1,9 @@
 <div class="flex flex-col items-center justify-center text-center">
     @if (minimal) {
         <div class="flex flex-col items-center mt-4 text-center pl-8">
-            <h5 class="mb-2 {{headingSize}} font-medium leading-tight text-center">{{meal.strMeal}}</h5>
+            <h5></h5>
+            <h5 class="mb-2 {{headingSize}} font-medium leading-tight text-center">{{meal | json}}</h5>
+            <!-- <h5 class="mb-2 {{headingSize}} font-medium leading-tight text-center">{{meal.strMeal}}</h5> -->
         </div>
     }
     @else {

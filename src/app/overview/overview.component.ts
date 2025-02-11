@@ -6,10 +6,13 @@ import { MealComponent } from '../meal/meal.component';
 import { FavouritesComponent } from '../favourites/favourites.component';
 
 import { Store } from '@ngrx/store';
-import { selectFavouritesCollection } from '../state/meals.selectors';
-import { Observable } from 'rxjs';
+// import { selectMeals, selectFavouritesCollection } from '../state/meals.selectors';
+import { map, Observable } from 'rxjs';
 import { MealApiActions } from '../state/meals.actions';
-import { FavouriteActions } from '../state/favourites.actions';
+import { selectMealPage, selectMealsForPage } from '../state/meals.selectors';
+import { AppState } from '../state/app.state';
+// import { selectMealsForPage } from '../state/meals.reducer';
+// import { FavouriteActions } from '../state/favourites.actions';
 
 
 @Component({
@@ -20,67 +23,51 @@ import { FavouriteActions } from '../state/favourites.actions';
 })
 export class OverviewComponent {
   private mealService = inject(MealsService);
-  mealPage: Meal[] = [];
-  currentPage: number = 1;
+  mealPage$: Observable<ReadonlyArray<Meal>>;
+  currentPageNumber: number = 1;
   limit: number = 10;
-  lastPage!: number;
-  favourites$: Observable<ReadonlyArray<Meal>>;
+  lastPageNumber!: number;
 
-  fetchNextPage() {
-    if (this.currentPage == this.lastPage) {
+
+  fetchPage(pageNumber: number) {
+    if (pageNumber < 1 || pageNumber > this.lastPageNumber) {
       return;
     }
-    this.currentPage += 1;
-    this.mealService.getMealPage(this.currentPage, this.limit).subscribe((data) => {
-      this.mealPage = data;
+    this.currentPageNumber = pageNumber;
+    this.mealService.getMealPage(this.currentPageNumber, this.limit).subscribe((meals) => {
+      this.store.dispatch(MealApiActions.loadedMealPage({ meals }));
     });
   }
 
-  fetchPrevPage() {
-    if (this.currentPage <= 1) {
-      return;
-    }
-    this.currentPage -= 1;
-    this.mealService.getMealPage(this.currentPage, this.limit).subscribe((data) => {
-      this.mealPage = data;
-    });
-  }
+  // onAdd(meal: Meal) {
+  //   this.store.dispatch(FavouriteActions.addFavourite({ meal }));
+  // }
 
-  fetchFirstPage() {
-    this.currentPage = 1;
-    this.mealService.getMealPage(1, this.limit).subscribe((data) => {
-      this.mealPage = data;
-    });
-  }
+  // onRemove(meal: Meal) {
+  //   this.store.dispatch(FavouriteActions.removeFavourite({ meal }));
+  // }
 
-  fetchLastPage() {
-    this.currentPage = this.lastPage;
-    this.mealService.getMealPage(this.lastPage, this.limit).subscribe((data) => {
-      this.mealPage = data;
-    });
-  }
-
-  onAdd(mealId: string) {
-    this.store.dispatch(FavouriteActions.addFavourite({ mealId }));
-  }
-
-  onRemove(mealId: string) {
-    this.store.dispatch(FavouriteActions.removeFavourite({ mealId }));
-  }
-
-  constructor(private store: Store) {
-    this.mealService.getAllMeals().subscribe((data) => {
-      this.lastPage = Math.floor(data.length / this.limit);
-    });
-    this.mealService.getMealPage(1, this.limit).subscribe((data) => {
-      this.mealPage = data;
-    });
-    this.favourites$ = this.store.select(selectFavouritesCollection);
+  constructor(private store: Store<AppState>) {
+    // this.mealPage$ = this.store.select(selectMealsForPage);
+    //FIXME: dynamically compute last page
+    this.lastPageNumber = 30;
+    this.mealPage$ = this.store.select(selectMealPage).pipe(map(
+      mealPageState => selectMealsForPage(mealPageState))
+    );
   }
 
   ngOnInit() {
+    this.mealPage$.subscribe((meals) => {
+      console.log("meals from store", meals)
+    })
+
+    this.store.select(selectMealPage).subscribe(state => {
+      console.log("current state", state)
+    });
+
+    //Initializing the store by loading first page and adding it to the state
     this.mealService.getMealPage(1, 10).subscribe((meals) => {
-      this.store.dispatch(MealApiActions.retrievedMealList({meals}))
+      this.store.dispatch(MealApiActions.loadedMealPage({ meals }))
     });
   }
 

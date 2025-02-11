@@ -1,5 +1,7 @@
-import { Meal } from "../data/meal.model"
+import { Meal } from "../data/meal.model";
+import { MealPageState } from "./meals.reducer";
 
 export interface AppState {
-    favourites: ReadonlyArray<string>;
+    mealPageState: MealPageState;
+    mealPool: ReadonlyMap<string, Meal>
 }
