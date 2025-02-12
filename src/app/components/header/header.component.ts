@@ -10,4 +10,5 @@ import { Input } from '@angular/core';
 })
 export class HeaderComponent {
   headerList = ["Home", "Meals", "Random", "Favourites"];
+  //TODO: add icon displaying the count of favourites on the favourites tab
 }

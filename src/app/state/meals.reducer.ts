@@ -5,29 +5,42 @@ import { MealApiActions } from "./meals.actions";
 // import { MealActionType, ActionType } from "./meals.actions";
 import { Meal } from "../data/meal.model";
 import { selectMealPool, selectVisible } from "./meals.selectors";
-
-export interface MealPageState {
-    mealPool: ReadonlyMap<string, Meal>;
-    visible: string[];
-}
+import { MealPageState } from "./app.state";
 
 export const initialState: MealPageState = {
-    mealPool: new Map(),
-    visible: [],
+    mealPool: {},
+    visible: [] as string[],
+    favs: [] as string[],
 }
 
 export const mealPageReducer = createReducer(
     initialState,
-    on(MealApiActions.loadedMealPage, (_state, { meals }) => {
+    on(MealApiActions.loadedMealPage, (state, { meals }) => {
+
+        console.log("Page loaded -> reducer computing");
+        console.log("MP reducer state", state);
+        // console.log("MP reducer meals", meals);
+
         const newTuples: [string, Meal][] = meals.map((meal) => [meal.idMeal!, meal]);
-        const contained = Array.from(_state.mealPool.entries())
-        const mealPool: ReadonlyMap<string, Meal> = new Map([...contained, ...newTuples]);
+        //TODO: maybe the bug is here note and check for later
+        // const contained = Array.from(state.mealPool.entries())
+        // const mealPool = new Map([...state.mealPool, ...newTuples]);
+        const mealPool = {...state.mealPool };
+        for (const meal of meals) {
+            mealPool[meal.idMeal!] = meal;
+        }
+
+        console.log("MP new map", mealPool)
+
         const visible = meals.map((meal) => meal.idMeal!);
 
-        return {
-            ..._state,
-            mealPool: mealPool,
-            visible: visible
+        const next = {
+            ...state,
+            mealPool,
+            visible,
         }
+        console.log("next state", next);
+
+        return next;
     })
 );

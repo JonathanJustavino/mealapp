@@ -2,7 +2,7 @@ import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { ApplicationConfig, provideZoneChangeDetection, isDevMode } from '@angular/core';
 
-import { provideStore } from '@ngrx/store';
+import { provideState, provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 import { bootstrapHeart, bootstrapHeartFill } from '@ng-icons/bootstrap-icons';
@@ -20,8 +20,8 @@ export const appConfig: ApplicationConfig = {
     provideIcons({ bootstrapHeart, bootstrapHeartFill }),
     provideHttpClient(),
     //TODO: Important property must have exact same name as declared in reducer file
-    provideStore({mealPageState: mealPageReducer}),
-    // provideStore({ favourites: favouritesReducer, meals: mealsReducer }),
+    provideStore({ mealPage: mealPageReducer }),
+    // provideStore({ mealPage: mealPageReducer, favs: favouritesReducer }),
     //TODO: find out what these options fully entail
     provideStoreDevtools({ name: "Meal App", maxAge: 25, logOnly: false, trace: true })
   ]

@@ -53,4 +53,10 @@ export class Meal {
     strImageSource?: string;
     strCreativeCommonsConfirmed?: string;
     dateModified?: string;
+
+    constructor(data?: Partial<Meal>) {
+        if (data) {
+            Object.assign(this, data);
+        }
+    }
 }
