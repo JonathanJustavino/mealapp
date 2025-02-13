@@ -40,10 +40,6 @@ export const selectMealPage = createFeatureSelector<MealPageState>('mealPage');
 //     return state.mealPool
 // }
 
-export interface AppState {
-    mealPage: MealPageState,
-}
-
 export const selectMealPool = createSelector(selectMealPage, (mealPageState: MealPageState) => mealPageState.mealPool);
 export const selectVisible = createSelector(selectMealPage, (mealPageState: MealPageState) => mealPageState.visible);
 

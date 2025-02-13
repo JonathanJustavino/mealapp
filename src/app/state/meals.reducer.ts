@@ -10,7 +10,7 @@ import { MealPageState } from "./app.state";
 export const initialState: MealPageState = {
     mealPool: {},
     visible: [] as string[],
-    favs: [] as string[],
+    // favs: [] as string[],
 }
 
 export const mealPageReducer = createReducer(

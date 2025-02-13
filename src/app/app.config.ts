@@ -20,8 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideIcons({ bootstrapHeart, bootstrapHeartFill }),
     provideHttpClient(),
     //TODO: Important property must have exact same name as declared in reducer file
-    provideStore({ mealPage: mealPageReducer }),
-    // provideStore({ mealPage: mealPageReducer, favs: favouritesReducer }),
+    provideStore({ mealPage: mealPageReducer, favs: favouritesReducer }),
     //TODO: find out what these options fully entail
     provideStoreDevtools({ name: "Meal App", maxAge: 25, logOnly: false, trace: true })
   ]

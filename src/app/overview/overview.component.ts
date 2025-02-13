@@ -51,13 +51,13 @@ export class OverviewComponent {
     this.lastPageNumber = 30;
     // this.mealPage$ = this.store.select(selectMealsForPage, {page: this.currentPageNumber});
 
-    this.store.select(selectMealPool).subscribe((mealPool) => {
-      console.log('pool is ', mealPool)
-    });
+    // this.store.select(selectMealPool).subscribe((mealPool) => {
+    //   console.log('pool is ', mealPool)
+    // });
 
-    this.store.select(selectVisible).subscribe((visible) => {
-      console.log('visibles ', visible)
-    });
+    // this.store.select(selectVisible).subscribe((visible) => {
+    //   console.log('visibles ', visible)
+    // });
 
     this.mealPage$ = this.store.select(selectMealsForPage);
 

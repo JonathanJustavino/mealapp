@@ -5,5 +5,5 @@ export interface MealPageState {
     //TODO: change map to record to be displayable in devtools
     mealPool: Record<string, Meal>;
     visible: ReadonlyArray<string>;
-    favs: ReadonlyArray<string>;
+    // favs: ReadonlyArray<string>;
 }

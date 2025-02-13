@@ -1,7 +1,8 @@
 import { createSelector, createFeatureSelector } from "@ngrx/store";
 // import { selectMeals } from "./meals.selectors";
 import { Meal } from "../data/meal.model";
-import { selectMealPool } from "./meals.selectors";
+import { selectMealPage, selectMealPool } from "./meals.selectors";
+import { MealPageState } from "./app.state";
 
 
 // export const selectFavourites = createFeatureSelector<ReadonlyArray<Meal>>('favourites');
@@ -18,10 +19,16 @@ import { selectMealPool } from "./meals.selectors";
 
 export const selectFavouriteState = createFeatureSelector<ReadonlyArray<string>>('favs');
 
+// export const selectFavouriteState = createSelector(selectMealPage, (mealPageState: MealPageState) => mealPageState.favs)
+
 export const selectFavourites = createSelector(
     selectMealPool,
     selectFavouriteState,
-    (pool, likedId) => {
-        return likedId.map((id) => pool[id]!)
+    (pool: Record<string, Meal>, likedIds:ReadonlyArray<string>) => {
+        console.log("fav pool", pool)
+        console.log("fav ids", likedIds)
+        const favs = likedIds.map((id) => pool[id]!)
+        console.log("fav meals from selector -> ", favs)
+        return favs
     }
 );

@@ -9,16 +9,13 @@ export const initialState: ReadonlyArray<string> = [];
 export const favouritesReducer = createReducer(
     initialState,
     on(FavouriteActions.addFavourite, (state, {mealId}) => {
-        console.log(state)
-        console.log(mealId)
-
-        return [...state, mealId]
+        const next = [...state, mealId]
+        console.log("next post add", next)
+        return next
     }),
     on(FavouriteActions.removeFavourite, (state, {mealId}) => {
         const removed = state.filter((id) => id !== mealId);
-        console.log(mealId)
-        console.log(removed)
-
+        console.log("next post removed", removed);
         return removed
     }),
 );
