@@ -7,60 +7,49 @@ import { MealPageState } from "./app.state";
 import { FavouriteActions } from "./favourites.actions";
 
 export const initialState: MealPageState = {
-    mealPool: {} as Record<string, Meal>,
-    visible: [] as string[],
-    favourites: [] as string[],
+    mealPool: {},
+    visible: [],
+    favourites: [],
 }
 
-export const favouritesReducer = createReducer(
-    initialState,
-    on(FavouriteActions.addFavourite, (state, {mealId}) => {
-        //Remember to return the correct state!!!
-        const updatedFavourites = [...state.favourites, mealId]
-        return {
-            ...state,
-            favourites: updatedFavourites,
-        }
-    }),
-    on(FavouriteActions.removeFavourite, (state, {mealId}) => {
-        //Remember to return the correct state!!!
-        const removed = state.favourites.filter((id) => id !== mealId);
-        return {
-            ...state,
-            favourites: removed,
-        }
-    }),
-)
+// export const favouritesReducer = createReducer(
+//     initialState,
+//     on(FavouriteActions.addFavourite, (state, {mealId}) => {
+//         //FIXME: check if id alread in state
+//         //Remember to return the correct state!!!
+//         const updatedFavourites = [...state.favourites, mealId]
+//         return {
+//             ...state,
+//             favourites: updatedFavourites,
+//         }
+//     }),
+//     on(FavouriteActions.removeFavourite, (state, {mealId}) => {
+//         //FIXME: check if id alread in state
+//         //Remember to return the correct state!!!
+//         const removed = state.favourites.filter((id) => id !== mealId);
+//         return {
+//             ...state,
+//             favourites: removed,
+//         }
+//     }),
+// )
 
 export const mealPageReducer = createReducer(
     initialState,
     on(MealApiActions.loadedMealPage, (state, { meals }) => {
 
-        const mealPool: Record<string, Meal> = { ...state.mealPool };
-
-        console.log("currently in favs", state.favourites);
-
-        const keep = [...state.visible, ...state.favourites]
-
-        console.log("old pool", Object.keys(mealPool).length);
-
         const newPool: Record<string, Meal> = {}
+        const mealPool: Record<string, Meal> = { ...state.mealPool };
+        const keepInMealPool = [...state.visible, ...state.favourites]
+        const visible = meals.map((meal) => meal.idMeal!);
 
-        for(const mealId of keep) {
+        for(const mealId of keepInMealPool) {
             newPool[mealId] = mealPool[mealId];
         }
 
         for(const meal of meals) {
             newPool[meal.idMeal!] = meal;
         }
-
-        //TODO: keep meals that are in favourites
-
-        console.log("new map", Object.keys(newPool).length);
-        console.log("MP new map", newPool)
-
-
-        const visible = meals.map((meal) => meal.idMeal!);
 
         const next = {
             ...state,
@@ -73,6 +62,7 @@ export const mealPageReducer = createReducer(
         return next;
     }),
     on(FavouriteActions.addFavourite, (state, {mealId}) => {
+        //FIXME: check if id alread in state
         //Remember to return the correct state!!!
         const updatedFavourites = [...state.favourites, mealId]
         return {
@@ -81,6 +71,7 @@ export const mealPageReducer = createReducer(
         }
     }),
     on(FavouriteActions.removeFavourite, (state, {mealId}) => {
+        //FIXME: check if id alread in state
         //Remember to return the correct state!!!
         const removed = state.favourites.filter((id) => id !== mealId);
         return {
