@@ -10,8 +10,7 @@ import { CommonModule } from '@angular/common';
     RouterOutlet,
     HeaderComponent,
     CommonModule,
-],
-
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

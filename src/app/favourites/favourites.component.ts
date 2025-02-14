@@ -6,7 +6,7 @@ import { bootstrapStar } from '@ng-icons/bootstrap-icons';
 import { IconType, NgIconComponent } from '@ng-icons/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { favouritesFeature } from '../state/favourites.state';
+import { mealPageFeature } from '../state/meals.state';
 import { MealPageState } from '../state/app.state';
 
 @Component({
@@ -20,17 +20,15 @@ export class FavouritesComponent implements OnInit {
   sidebarIcon: IconType = bootstrapStar;
 
   favouriteList$: Observable<ReadonlyArray<Meal>>;
-  // favouriteList: Meal[];
   @Input() side = false;
 
   constructor(private store: Store<MealPageState>) {
-    // this.favouriteList = [];
-    this.favouriteList$ = this.store.select(favouritesFeature.selectFavourites);
+    this.favouriteList$ = this.store.select(mealPageFeature.selectFavourites);
 
   }
 
   ngOnInit() {
-    // this.favouriteList$ = this.store.select(selectFavourites);
+
   }
 
 }

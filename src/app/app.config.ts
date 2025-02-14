@@ -10,7 +10,7 @@ import { provideIcons } from '@ng-icons/core';
 
 import { routes } from './app.routes';
 import { mealPageFeature, mealPageReducer } from './state/meals.state';
-import { favouritesFeature, favouritesReducer } from './state/favourites.state';
+// import { favouritesFeature, favouritesReducer } from './state/favourites.state';
 
 
 export const appConfig: ApplicationConfig = {
@@ -23,7 +23,6 @@ export const appConfig: ApplicationConfig = {
     provideStore(),
     // provideStore({ mealPage: mealPageReducer, favs: favouritesReducer }),
     provideState(mealPageFeature),
-    provideState(favouritesFeature),
     //TODO: find out what these options fully entail
     provideStoreDevtools({ name: "Meal App", maxAge: 25, logOnly: false, trace: true })
   ]
