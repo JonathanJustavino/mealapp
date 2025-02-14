@@ -6,7 +6,7 @@ import { bootstrapStar } from '@ng-icons/bootstrap-icons';
 import { IconType, NgIconComponent } from '@ng-icons/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { selectFavourites } from '../state/favourites.selectors';
+import { favouritesFeature } from '../state/favourites.state';
 import { MealPageState } from '../state/app.state';
 
 @Component({
@@ -25,7 +25,7 @@ export class FavouritesComponent implements OnInit {
 
   constructor(private store: Store<MealPageState>) {
     // this.favouriteList = [];
-    this.favouriteList$ = this.store.select(selectFavourites);
+    this.favouriteList$ = this.store.select(favouritesFeature.selectFavourites);
 
   }
 

@@ -9,8 +9,8 @@ import { bootstrapHeart, bootstrapHeartFill } from '@ng-icons/bootstrap-icons';
 import { provideIcons } from '@ng-icons/core';
 
 import { routes } from './app.routes';
-import { mealPageReducer } from './state/meals.reducer';
-import { favouritesReducer } from './state/favourites.reducer';
+import { mealPageFeature, mealPageReducer } from './state/meals.state';
+import { favouritesFeature, favouritesReducer } from './state/favourites.state';
 
 
 export const appConfig: ApplicationConfig = {
@@ -20,7 +20,10 @@ export const appConfig: ApplicationConfig = {
     provideIcons({ bootstrapHeart, bootstrapHeartFill }),
     provideHttpClient(),
     //TODO: Important property must have exact same name as declared in reducer file
-    provideStore({ mealPage: mealPageReducer, favs: favouritesReducer }),
+    provideStore(),
+    // provideStore({ mealPage: mealPageReducer, favs: favouritesReducer }),
+    provideState(mealPageFeature),
+    provideState(favouritesFeature),
     //TODO: find out what these options fully entail
     provideStoreDevtools({ name: "Meal App", maxAge: 25, logOnly: false, trace: true })
   ]

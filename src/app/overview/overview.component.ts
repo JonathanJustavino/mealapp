@@ -8,7 +8,7 @@ import { FavouritesComponent } from '../favourites/favourites.component';
 import { select, Store } from '@ngrx/store';
 import { map, Observable } from 'rxjs';
 import { MealApiActions } from '../state/meals.actions';
-import { selectMealPool, selectMealsForPage, selectVisible } from '../state/meals.selectors';
+import { mealPageFeature } from '../state/meals.state';
 import { FavouriteActions } from '../state/favourites.actions';
 import { MealPageState } from '../state/app.state';
 
@@ -49,21 +49,8 @@ export class OverviewComponent {
     //FIXME: dynamically compute last page
 
     this.lastPageNumber = 30;
-    // this.mealPage$ = this.store.select(selectMealsForPage, {page: this.currentPageNumber});
 
-    // this.store.select(selectMealPool).subscribe((mealPool) => {
-    //   console.log('pool is ', mealPool)
-    // });
-
-    // this.store.select(selectVisible).subscribe((visible) => {
-    //   console.log('visibles ', visible)
-    // });
-
-    this.mealPage$ = this.store.select(selectMealsForPage);
-
-    // this.mealPage$ = this.store.select(selectMealPage).pipe(map(
-    //   mealPageState => selectMealsForPage(mealPageState))
-    // );
+    this.mealPage$ = this.store.select(mealPageFeature.selectMealsForPage);
 
   }
 
