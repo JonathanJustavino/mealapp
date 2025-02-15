@@ -28,7 +28,6 @@ export function getInitialState(initialState: MealPageState): MealPageState {
             const visible = Array.isArray(mealPageState.visible) ? mealPageState.visible : [];
             const favourites = Array.isArray(mealPageState.favourites) ? mealPageState.favourites : [];
 
-            //TODO: update ui frontend to keep track of liked unliked
             return {
                 mealPool,
                 visible,
@@ -37,7 +36,7 @@ export function getInitialState(initialState: MealPageState): MealPageState {
         } catch(error) {
             console.error("Error parsing stored state", error);
             //TODO: may uncomment this
-            // localStorage.removeItem(STORAGE_KEY);
+            localStorage.removeItem(STORAGE_KEY);
         }
     }
 
