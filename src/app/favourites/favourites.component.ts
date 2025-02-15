@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Meal } from '../data/meal.model';
 import { MealComponent } from '../meal/meal.component';
 import { CommonModule } from '@angular/common';
@@ -26,8 +26,6 @@ export class FavouritesComponent implements OnInit {
     this.favouriteList$ = this.store.select(mealPageFeature.selectFavouriteMeals);
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
 
 }

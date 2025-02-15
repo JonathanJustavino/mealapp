@@ -10,13 +10,21 @@
                     @for (fav of favouriteList$ | async; track fav.idMeal) {
                         <app-meal [meal]="fav" [minimal]="true"></app-meal>
                     }
-
-                    <!-- @if (favouriteList$ | async; as favList) {
+                </li>
+            </ul>
+        </div>
+    </aside>
+} @else {
+    <div class="flex justify-center h-full px-3 py-4 overflow-y-auto">
+        <ul class="space-y-2 font-medium">
+            <li>
+                @if (favouriteList$ | async; as favList) {
+                    @if (favList.length > 0) {
                         <table>
                             @for (meal of favList; track meal.idMeal) {
                                 <tr>
                                     <td>
-                                        <app-meal [meal]="meal" [minimal]="true"></app-meal>
+                                        <app-meal [meal]="meal"></app-meal>
                                     </td>
                                 </tr>
                             }
@@ -25,31 +33,7 @@
                     @else {
                         <h1 class="pt-4">oops! ._.'</h1>
                         <h1 class="pt-1">looks like your list is empty! </h1>
-                    } -->
-                </li>
-            </ul>
-        </div>
-    </aside>
-} @else {
-    <div class="h-full px-3 py-4 overflow-y-auto bg-cyan-500">
-        <ng-icon [svg]="sidebarIcon"></ng-icon>
-        <span class="ms-3">{{sidebarLabel}}</span>
-        <ul class="space-y-2 font-medium">
-            <li>
-                @if (favouriteList$ | async; as favList) {
-                    <table>
-                        @for (meal of favList; track meal.idMeal) {
-                            <tr>
-                                <td>
-                                    <app-meal [meal]="meal" [minimal]="true"></app-meal>
-                                </td>
-                            </tr>
-                        }
-                    </table>
-                }
-                @else {
-                    <h1 class="pt-4">oops! ._.'</h1>
-                    <h1 class="pt-1">looks like your list is empty! </h1>
+                    }
                 }
             </li>
         </ul>
