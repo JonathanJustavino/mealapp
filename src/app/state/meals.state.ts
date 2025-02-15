@@ -12,32 +12,9 @@ export const initialState: MealPageState = {
     favourites: [],
 }
 
-// export const favouritesReducer = createReducer(
-//     initialState,
-//     on(FavouriteActions.addFavourite, (state, {mealId}) => {
-//         //FIXME: check if id alread in state
-//         //Remember to return the correct state!!!
-//         const updatedFavourites = [...state.favourites, mealId]
-//         return {
-//             ...state,
-//             favourites: updatedFavourites,
-//         }
-//     }),
-//     on(FavouriteActions.removeFavourite, (state, {mealId}) => {
-//         //FIXME: check if id alread in state
-//         //Remember to return the correct state!!!
-//         const removed = state.favourites.filter((id) => id !== mealId);
-//         return {
-//             ...state,
-//             favourites: removed,
-//         }
-//     }),
-// )
-
 export const mealPageReducer = createReducer(
     initialState,
     on(MealApiActions.loadedMealPage, (state, { meals }) => {
-
         const newPool: Record<string, Meal> = {}
         const mealPool: Record<string, Meal> = { ...state.mealPool };
         const keepInMealPool = [...state.visible, ...state.favourites]
@@ -62,17 +39,19 @@ export const mealPageReducer = createReducer(
         return next;
     }),
     on(FavouriteActions.addFavourite, (state, {mealId}) => {
-        //FIXME: check if id alread in state
-        //Remember to return the correct state!!!
-        const updatedFavourites = [...state.favourites, mealId]
+        const current_favourites = state.favourites;
+        const already_contained = current_favourites.find((id) => id === mealId)
+
+        if (already_contained) {
+            return state
+        }
+
         return {
             ...state,
-            favourites: updatedFavourites,
+            favourites: [...current_favourites, mealId],
         }
     }),
     on(FavouriteActions.removeFavourite, (state, {mealId}) => {
-        //FIXME: check if id alread in state
-        //Remember to return the correct state!!!
         const removed = state.favourites.filter((id) => id !== mealId);
         return {
             ...state,
@@ -83,10 +62,6 @@ export const mealPageReducer = createReducer(
 
 
 export const mealPageFeatureKey = 'mealPage'
-
-/**
- *
- */
 export const mealPageFeature = createFeature({
     name: mealPageFeatureKey,
     reducer: mealPageReducer,
@@ -94,17 +69,18 @@ export const mealPageFeature = createFeature({
         selectMealsForPage: createSelector(
             selectMealPool,
             selectVisible,
-            (mealPool: Record<string, Meal>, currentMeals: ReadonlyArray<string>) => {
+            selectFavourites,
+            (mealPool: Record<string, Meal>, currentMeals: ReadonlyArray<string>, favourites: ReadonlyArray<string>) => {
                 if (!currentMeals || !mealPool) {
                     return [];
                 }
+                const likedLookup = new Set(favourites);
                 const currentlyDisplayedMeals = currentMeals.map((mealId) => {
                     const meal = mealPool[mealId];
-                    if (!meal) {
-                        console.warn(`mealID ${mealId} not in pool`)
+                    if(likedLookup.has(mealId)) {
                         return new Meal({
-                            idMeal: undefined,
-                            strMeal: undefined,
+                            ...meal,
+                            liked: true,
                         });
                     }
                     return meal
@@ -112,7 +88,7 @@ export const mealPageFeature = createFeature({
                 return currentlyDisplayedMeals
             }
         ),
-        selectFavourites: createSelector(
+        selectFavouriteMeals: createSelector(
             selectMealPool,
             selectFavourites,
             (mealPool: Record<string, Meal>, favourites: ReadonlyArray<string>) => {

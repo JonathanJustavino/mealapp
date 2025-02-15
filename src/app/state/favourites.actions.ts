@@ -1,4 +1,4 @@
-import { createAction, createActionGroup, props } from "@ngrx/store";
+import { createActionGroup, props } from "@ngrx/store";
 
 export const FavouriteActions = createActionGroup({
     source: 'Favourites',
