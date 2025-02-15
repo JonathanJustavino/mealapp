@@ -23,8 +23,7 @@ export class FavouritesComponent implements OnInit {
   @Input() side = false;
 
   constructor(private store: Store<MealPageState>) {
-    this.favouriteList$ = this.store.select(mealPageFeature.selectFavourites);
-
+    this.favouriteList$ = this.store.select(mealPageFeature.selectFavouriteMeals);
   }
 
   ngOnInit() {

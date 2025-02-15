@@ -5,6 +5,8 @@ import { bootstrapHeart, bootstrapHeartFill } from '@ng-icons/bootstrap-icons';
 import { Store } from '@ngrx/store';
 import { FavouriteActions } from '../state/favourites.actions';
 import { CommonModule } from '@angular/common';
+import { mealPageFeature } from '../state/meals.state';
+import { Observable, take } from 'rxjs';
 
 @Component({
   selector: 'app-meal',
@@ -21,7 +23,7 @@ export class MealComponent {
 
   thumbnail: string | undefined;
   headingSize = "text-xl";
-  liked: boolean = true;
+  liked: boolean = false;
   buttonIcon: IconType = bootstrapHeart;
 
   @Input() size!: Number;
@@ -32,14 +34,15 @@ export class MealComponent {
 
 
   toggle() {
-    this.liked = !this.liked;
     if (this.liked) {
       this.buttonIcon = bootstrapHeart;
       this.remove.emit(this.meal.idMeal!);
+      this.liked = false;
       return
     }
     this.buttonIcon = bootstrapHeartFill;
     this.add.emit(this.meal.idMeal!);
+    this.liked = true;
   }
 
   ngOnInit() {
@@ -47,9 +50,16 @@ export class MealComponent {
       return
     }
     this.thumbnail = `http://localhost:3000/image/${this.meal.idMeal}`;
+
+    this.store.select(mealPageFeature.selectFavourites).pipe(take(1)).subscribe(favs => {
+      this.liked = favs.includes(this.meal.idMeal!)
+    });
+
+    this.buttonIcon = bootstrapHeart;
+    if (this.liked) {
+      this.buttonIcon = bootstrapHeartFill;
+    }
   }
 
-  constructor(private store: Store) {
-    this.buttonIcon = bootstrapHeart;
-  }
+  constructor(private store: Store) { }
 }

@@ -53,6 +53,7 @@ export class Meal {
     strImageSource?: string;
     strCreativeCommonsConfirmed?: string;
     dateModified?: string;
+    liked?: boolean;
 
     constructor(data?: Partial<Meal>) {
         if (data) {

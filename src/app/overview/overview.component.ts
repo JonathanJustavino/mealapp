@@ -5,8 +5,8 @@ import { Meal } from '../data/meal.model';
 import { MealComponent } from '../meal/meal.component';
 import { FavouritesComponent } from '../favourites/favourites.component';
 
-import { select, Store } from '@ngrx/store';
-import { map, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { MealApiActions } from '../state/meals.actions';
 import { mealPageFeature } from '../state/meals.state';
 import { FavouriteActions } from '../state/favourites.actions';
@@ -22,6 +22,7 @@ import { MealPageState } from '../state/app.state';
 export class OverviewComponent {
   private mealService = inject(MealsService);
   mealPage$: Observable<ReadonlyArray<Meal>>;
+  favourites$: Observable<ReadonlyArray<Meal>>;
   currentPageNumber: number = 1;
   limit: number = 10;
   lastPageNumber!: number;
@@ -51,14 +52,10 @@ export class OverviewComponent {
     this.lastPageNumber = 30;
 
     this.mealPage$ = this.store.select(mealPageFeature.selectMealsForPage);
-
+    this.favourites$ = this.store.select(mealPageFeature.selectFavouriteMeals);
   }
 
   ngOnInit() {
-    // this.store.select(selectMealPage).subscribe(state => {
-    //   console.log("current state", state)
-    // });
-
     //Initializing the store by loading first page and adding it to the state
     this.mealService.getMealPage(1, 10).subscribe((meals) => {
       this.store.dispatch(MealApiActions.loadedMealPage({ meals }))
