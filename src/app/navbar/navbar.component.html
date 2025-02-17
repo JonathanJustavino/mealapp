@@ -1,6 +1,6 @@
 <p>Links:</p>
 <ul>
     <li *ngFor="let route of routes">
-        <a>{{route.name}}</a>
+        <a routerLink="{{route.href}}">{{route.name}}</a>
     </li>
 </ul>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
+import { NavbarRoutes } from '../model/navbar-routes.model';
 
 @Component({
   selector: 'app-root',
@@ -10,9 +11,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 })
 export class AppComponent {
   title = 'gogogo';
-  availableRoutes: object[] = [
-    {name: "home"},
-    {name: "meals"},
-    {name: "favourites"}
+  availableRoutes: NavbarRoutes[] = [
+    {name: "home", href: "/"},
+    {name: "meals", href: "/meals"},
+    {name: "favourites", href: "/favourites"}
   ];
 }
