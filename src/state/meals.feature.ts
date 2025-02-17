@@ -2,6 +2,7 @@ import { createFeature, createReducer, createSelector, on } from "@ngrx/store";
 import { MealPageFeatureState } from "./app.state";
 import { mealPageAPI } from "./meals.actions";
 import { Meal } from "../model/meal.model";
+import { MealActions } from "./meal.action";
 
 
 export const initialState: MealPageFeatureState = {
@@ -10,13 +11,16 @@ export const initialState: MealPageFeatureState = {
     liked: [],
     isLoading: false,
     success: false,
-    currentPage: 1
+    currentPage: 0
 }
 
 
 export const mealPageReducer = createReducer(
     initialState,
-    on(mealPageAPI.loadingPageSuccess, (state, { meals }) => {
+    on(mealPageAPI.loadingPageSuccess, (state, { meals, page }) => {
+        if (page === state.currentPage) {
+            return state
+        }
         const newPool: Record<string, Meal> = {}
         const oldPool = state.mealPool;
         const mealIdsFromLastPage = state.visible;
@@ -37,8 +41,28 @@ export const mealPageReducer = createReducer(
             mealPool: newPool,
             visible: visibleOnPage,
             success: true,
+            currentPage: page,
         }
     }),
+    on(MealActions.liked, (state, { mealId }) => {
+        const currentlyLiked = state.liked;
+        if (currentlyLiked.find((id) => id === mealId)) {
+            return state
+        }
+        
+        return {
+            ...state,
+            liked: [...currentlyLiked, mealId]
+        }
+    }),
+    on(MealActions.disliked, (state, { mealId }) => {
+        const removed = state.liked.filter((id) => id !== mealId);
+        
+        return {
+            ...state,
+            liked: removed,
+        }
+    })
 );
 
 
