@@ -1,10 +1,10 @@
-import { createActionGroup, emptyProps, props } from "@ngrx/store";
+import { createActionGroup, props } from "@ngrx/store";
 
 
-export const meal = createActionGroup({
+export const MealActions = createActionGroup({
     source: "Meal",
     events: {
-        'Liked': props<{mealId: string}>,
-        'Disliked': props<{mealId: string}>,
+        'Liked': props<{mealId: string}>(),
+        'Disliked': props<{mealId: string}>(),
     }
 });
