@@ -1,1 +1,17 @@
-<p>meals works!</p>
+@if (mealList$) {
+    <h1 class="m-4 text-center">{{title}}</h1>
+    <div class="px-10">
+        <div class="flex justify-center space-x-4 m-6">
+            @if (pageNumber$ | async; as pageNumber) {
+                <button (click)="fetchNextPage(pageNumber - 1)" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">Prev</button>
+                <p>{{pageNumber}}</p>
+                <button (click)="fetchNextPage(pageNumber + 1)" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">Next</button>
+            }
+        </div>
+        <div class="grid grid-cols-3 gap-4">
+            @for (meal of mealList$ | async; track $index) {
+                <app-meal (like)="onLike(meal.idMeal!)" (dislike)="onDisLike(meal.idMeal!)"  [meal]="meal"></app-meal>
+            }
+        </div>
+    </div>
+}
