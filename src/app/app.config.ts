@@ -5,7 +5,8 @@ import { routes } from './app.routes';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideHttpClient } from '@angular/common/http';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { mealFeature } from '../state/meals.feature';
+import { initialState, mealFeature, mealPageReducer } from '../state/meals.feature';
+import { defaultmealPageFeatureState, getInitialState, metaReducers } from '../state/local-storage.metareducer';
 
 
 export const appConfig: ApplicationConfig = {
@@ -13,11 +14,11 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(),
     provideStore(),
-    //TODO: uncomment when feature ready
-    // provideState(),
     provideRouter(routes),
-    provideStore({}),
-    provideState(mealFeature),
+    provideStore(
+      { mealFeature: mealPageReducer },
+      { metaReducers, initialState: { mealFeature: getInitialState(defaultmealPageFeatureState) }}
+    ),
     provideStoreDevtools({ name: "Meal App", maxAge: 25, logOnly: false, trace: true })
-]
+  ]
 };
