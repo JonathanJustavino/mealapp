@@ -9,9 +9,22 @@ import { Meal } from '../../model/meal.model';
 })
 export class MealComponent {
   @Input() meal!: Meal;
+  liked: boolean;
+  likeBtnLabel: string = "like"
+
+  toggleLike() {
+    if(this.liked) {
+      this.liked = false;
+      this.likeBtnLabel = "like";
+      return
+    }
+
+    this.liked = true;
+    this.likeBtnLabel = "dislike";
+  }
 
   constructor() {
-
+    this.liked = false;
   }
 
 }
