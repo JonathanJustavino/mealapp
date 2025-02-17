@@ -8,9 +8,10 @@
                 <button (click)="fetchNextPage(pageNumber + 1)" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">Next</button>
             }
         </div>
-        <div class="grid grid-cols-3 gap-4">
-            @for (meal of mealList$ | async; track $index) {
-                <app-meal (like)="onLike(meal.idMeal!)" (dislike)="onDisLike(meal.idMeal!)"  [meal]="meal"></app-meal>
+        <div class="grid grid-cols-3 gap-4 mb-8">
+            <!-- //NOTE richtige id tracken -->
+            @for (meal of mealList$ | async; track meal.idMeal) {
+                <app-meal (like)="onLike(meal.idMeal!)" (dislike)="onDisLike(meal.idMeal!)" [meal]="meal"></app-meal>
             }
         </div>
     </div>
