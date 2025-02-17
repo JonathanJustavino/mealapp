@@ -1,6 +1,7 @@
-<p>Links:</p>
-<ul>
-    <li *ngFor="let route of routes">
-        <a routerLink="{{route.href}}">{{route.name}}</a>
-    </li>
-</ul>
+<div class="py-4">
+    <ul class="flex justify-center space-x-2">
+        <li *ngFor="let route of routes">
+            <a class="font-medium text-blue hover:underline" routerLink="{{route.href}}" routerLinkActive="active">{{route.name}}</a>
+        </li>
+    </ul>
+</div>
