@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './homepage.component.css'
 })
 export class HomepageComponent {
-
+  title = "Welcome to the Meal App";
+  homeImgSrc = "homepage-image.jpg";
 }
