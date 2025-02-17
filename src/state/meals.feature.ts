@@ -17,6 +17,7 @@ export const initialState: MealPageFeatureState = {
 
 export const mealPageReducer = createReducer(
     initialState,
+    //TODO: page limit iwas modularer halten
     on(mealPageAPI.loadingPageSuccess, (state, { meals, page }) => {
         if (page === state.currentPage) {
             return state
@@ -24,8 +25,13 @@ export const mealPageReducer = createReducer(
         const newPool: Record<string, Meal> = {}
         const oldPool = state.mealPool;
         const mealIdsFromLastPage = state.visible;
+        const currentlyLiked = state.liked;
 
         mealIdsFromLastPage.forEach((mealId) => {
+            newPool[mealId] = oldPool[mealId];
+        });
+
+        currentlyLiked.forEach((mealId) => {
             newPool[mealId] = oldPool[mealId];
         });
 
@@ -75,11 +81,28 @@ export const mealFeature = createFeature({
         selectMealsOnPage: createSelector(
             selectMealPool,
             selectVisible,
-            (mealPool: Record<string, Meal>, visible: string[]) => {
-                const mealsOnPage = visible.map((mealId) => mealPool[mealId])
-
+            selectLiked,
+            (mealPool: Record<string, Meal>, visible: string[], liked: ReadonlyArray<string>) => {
+                if(!mealPool || !visible) {
+                    return [];
+                }
+                const likedLookup = new Set(liked);
+                const mealsOnPage = visible.map((mealId) =>  mealPool[mealId]);
                 return mealsOnPage
             }
-        ), 
+        ),
+        selectLikedMeals: createSelector(
+            selectMealPool,
+            selectLiked,
+            (mealPool: Record<string, Meal>, liked: string[]) => {
+                if(!mealPool || !liked) {
+                    return [];
+                }
+
+                const likedMeals = liked.map((mealId) =>  mealPool[mealId]);
+
+                return likedMeals;
+            }
+        ),
     }),
 });
