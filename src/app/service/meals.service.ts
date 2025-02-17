@@ -13,6 +13,11 @@ export class MealsService {
 
   getMeals() {}
 
+  getMealPage(page: number, limit: number): Observable<ReadonlyArray<Meal>> {
+    const mealPageSuffix = `meals?page=${page}&limit=${limit}`;
+    return this.http.get<Meal[]>(`${this.baseURL}/${mealPageSuffix}`);
+  }
+
   getRandom(): Observable<Meal> {
     const randomMealSuffix = "random";
     return this.http.get<Meal>(`${this.baseURL}/${randomMealSuffix}`);
