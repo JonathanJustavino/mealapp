@@ -6,7 +6,7 @@ export const mealPageAPI = createActionGroup({
     source: "Meal Page API",
     events: {
         'Loading Page': emptyProps(),
-        'Loading Page Success': props<{meals: ReadonlyArray<Meal>}>(),
+        'Loading Page Success': props<{meals: ReadonlyArray<Meal>, page: number}>(),
         'Loading Page Failure': props<{meals: ReadonlyArray<Meal>}>(),
     }
 });
