@@ -1,1 +1,5 @@
-<p>favourites works!</p>
+<div>
+    @for (meal of liked$ | async; track meal.idMeal) {
+        <app-meal (like)="onLike(meal.idMeal!)" (dislike)="onDisLike(meal.idMeal!)" [meal]="meal"></app-meal>
+    }
+</div>
