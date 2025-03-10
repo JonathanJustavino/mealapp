@@ -5,7 +5,6 @@ the instructions in the Setup section.
 
 ## Setup
 
-
 There are two ways to run this project:
 
 1. Using git's worktree feature (recommended)
@@ -14,11 +13,13 @@ There are two ways to run this project:
 ### 1. Using git worktree
 
 1. Clone the `bare` repository:
+
 ```bash
 git clone --bare git@github.com:JonathanJustavino/mealapp.git ./mealapp/.git/
 ```
 
-2. Navigate into the mealapp directory and add both the `main` and the `backend` branch as worktrees
+2. Navigate into the mealapp directory and add both the __main__ and the __backend__ branch as worktrees
+
 ```bash
 git worktree add main main
 git worktree add backend backend
@@ -29,10 +30,10 @@ git worktree add backend backend
 1. Clone the repository twice
 2. Respectively check out the main and the backend branch
 
-
 ### Install dependencies
 
 - Install all required dependencies in each branch/workstree respectively via:
+
 ```bash
 npm install
 ```
@@ -48,6 +49,7 @@ ng serve
 ## Run the backend development server
 
 - To start the local backend server in dev mode, run:
+
 ```zsh
 pn run dev
 ```
@@ -76,6 +78,5 @@ To execute unit tests with the [Karma](https://karma-runner.github.io) test runn
 ```bash
 ng test
 ```
-
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.7.
