@@ -1,0 +1,13 @@
+services:
+  db:
+    image: "mysql:${TAG}"
+    env_file:
+      - .db-env
+    container_name: mealDB
+    ports:
+      - "${PORT_A}:${PORT_B}"
+    environment:
+      MYSQL_ROOT_PASSWORD: "${ROOTPWD}"
+      MYSQL_DATABASE: "${DB_NAME}"
+    volumes:
+      - "${MYSQLPATH}:/var/lib/mysql"
