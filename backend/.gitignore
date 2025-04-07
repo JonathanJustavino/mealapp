@@ -42,3 +42,8 @@ testem.log
 Thumbs.db
 
 node_modules/*
+
+# Database related files
+src/db/data/*
+
+data/db-design.png
