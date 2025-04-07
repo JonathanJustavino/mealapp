@@ -45,5 +45,5 @@ node_modules/*
 
 # Database related files
 src/db/data/*
-
+*/.db-env
 data/db-design.png
