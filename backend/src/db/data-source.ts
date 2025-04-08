@@ -3,12 +3,13 @@ import * as dotenv from 'dotenv';
 
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { Meal } from "./entity/Meal";
+import { Meal } from '@entity/Meal';
 
 
 const ENV_PATH = 'db/.db-env';
 dotenv.config({path: path.resolve(__dirname, ENV_PATH)});
 
+console.log("Parsing port");
 const port = parseInt(process.env.PORT_A!);
 
 export const AppDataSource = new DataSource({
