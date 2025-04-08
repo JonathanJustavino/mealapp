@@ -3,7 +3,7 @@ services:
     image: "mysql:${TAG}"
     env_file:
       - .db-env
-    container_name: mealDB
+    container_name: "${HOST}"
     ports:
       - "${PORT_A}:${PORT_B}"
     environment:
