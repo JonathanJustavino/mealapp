@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Meal } from '../../model/meal.model';
+import { Observable, take, tap } from 'rxjs';
+import { mapBackendMealToFrontend, Meal } from '../../model/meal.model';
 import { HttpClient } from '@angular/common/http';
+import { of, map } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,14 @@ export class MealsService {
 
   getMealPage(page: number, limit: number): Observable<ReadonlyArray<Meal>> {
     const mealPageSuffix = `meals?page=${page}&limit=${limit}`;
-    return this.http.get<Meal[]>(`${this.baseURL}/${mealPageSuffix}`);
+    const result = this.http.get<any[]>(`${this.baseURL}/${mealPageSuffix}`);
+
+    const frontendMeals: Observable<Meal[]> = result.pipe(
+      map((meals) => meals.map(mapBackendMealToFrontend)),
+      tap((converted) => console.log("conv", converted))
+    );
+
+    return frontendMeals;
   }
 
   getRandom(): Observable<Meal> {

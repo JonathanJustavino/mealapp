@@ -59,3 +59,19 @@ export class Meal {
                 }
         }
 }
+
+export function mapBackendMealToFrontend(backendMeal: any): Meal {
+    const meal = new Meal({
+        idMeal: `${backendMeal.meal_themeal_debug_id}`,
+        strMeal: backendMeal.meal_name,
+        strInstructions: backendMeal.meal_instructions,
+        strMealThumb: backendMeal.meal_thumbnail,
+        strYoutube: backendMeal.meal_youtubeLink,
+        strArea: backendMeal.meal_area,
+        strCategory: backendMeal.meal_category,
+        strSource: backendMeal.meal_source_uri,
+        strTags: backendMeal.meal_tags?.map((tag: any) => tag.name).join(','),
+    });
+
+    return meal;
+}
