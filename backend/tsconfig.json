@@ -10,6 +10,7 @@
          "@entity/*": ["entity/*"],
          "@plugins/*": ["plugins/*"],
          "@migration/*": ["migration/*"],
+         "@columns/*": ["db/table/*"],
       },
       "target": "es2021",
       "module": "commonjs",
