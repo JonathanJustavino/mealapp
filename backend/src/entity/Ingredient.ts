@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from "typeorm"
-import { Meal } from "./Meal";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from "typeorm"
+import { Meal } from "@entity/Meal";
+// import { Measure } from "./Measure";
 
 @Entity()
 export class Ingredient {
@@ -11,4 +12,8 @@ export class Ingredient {
 
     @ManyToMany(() => Meal, meal => meal.tags)
     meals: Meal[];
+
+    // @ManyToMany(() => Measure, measure => measure.ingredients, { cascade: true })
+    // @JoinTable()
+    // measures: Measure[];
 }

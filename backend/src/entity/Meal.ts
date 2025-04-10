@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, Unique, ManyToMany, JoinTable } from "typeorm"
-import { Tag } from "./Tag"
-import { Ingredient } from "./Ingredient";
+import { Tag } from "@entity/Tag"
+import { Ingredient } from "@entity/Ingredient";
 
 
 @Entity()
@@ -16,7 +16,7 @@ export class Meal {
     @Column()
     name: string;
 
-    @Column()
+    @Column({type: 'text'})
     instructions: string;
 
     @Column()
@@ -31,8 +31,10 @@ export class Meal {
     @Column()
     category: string;
 
-    @Column()
-    source_uri: number;
+    @Column({
+        nullable: true
+    })
+    source_uri: string;
 
     @ManyToMany(() => Tag, tag => tag.meals, { cascade: true })
     @JoinTable()
