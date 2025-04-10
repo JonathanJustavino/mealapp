@@ -1,6 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from "typeorm"
 import { Meal } from "@entity/Meal";
-// import { Measure } from "./Measure";
 
 @Entity()
 export class Ingredient {
