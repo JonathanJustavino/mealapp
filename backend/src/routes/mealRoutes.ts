@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import fastify, { FastifyInstance } from "fastify";
+import { FastifyInstance } from "fastify";
 
 
 const rootPath = path.resolve(process.cwd());
@@ -12,13 +12,17 @@ console.log(dbFilePath)
 
 export async function mealRoutes(app: FastifyInstance) {
 
-    app.get('/', function (request, reply) {
+    app.get('/', function (_, reply) {
         reply.send({ hello: 'world' })
     });
 
     app.get('/meals', async function (request, reply) {
-        const meals = await app.db.findAllMeals();
-        console.log(meals);
+        const query = request.query as { page: number, limit: number };
+        const pageParam = query.page;
+        const limitParam = query.limit;
+
+        const meals = await app.db.getMealPage(pageParam, limitParam);
+        console.log(meals)
         reply.send(meals);
     });
 
@@ -41,27 +45,25 @@ export async function mealRoutes(app: FastifyInstance) {
         reply.send(mealPage);
     });
 
-    app.get('/mealids', function(request, reply) {
-        // const ids = mealList.map((meal) => {return meal.idMeal});
-        // const ids = this.db.
+    app.get('/mealids', async function(_, reply) {
+        const ids = await app.db.getMealIds();
 
-        // reply.send(ids);
+        reply.send(ids);
     });
 
-    // app.get('/random', function(request, reply) {
-    //     const rndIndex = Math.floor(Math.random() * mealList.length);
-    //     const rndMeal = mealList[rndIndex];
+    app.get('/random', async function(_, reply) {
+        const random = await app.db.getRandomMeal();
 
-    //     reply.send(rndMeal);
-    // });
+        reply.send(random);
+    });
 
-    // app.get('/search', function(request, reply) {
-    //     const query = request.query as {name: string};
-    //     const name = query.name;
+    app.get('/search', async function(request, reply) {
+        const query = request.query as {name: string};
+        const name = query.name;
+        const meal = await app.db.findMealByName(name);
 
-    //     const result = mealList.filter((meal) => meal.strMeal?.toLowerCase().includes(name));
-    //     reply.send(result);
-    // });
+        reply.send(meal);
+    });
 
     // app.get('/starts-with', function(request, reply) {
     //     const query = request.query as {letter: string};
@@ -71,42 +73,37 @@ export async function mealRoutes(app: FastifyInstance) {
     //     reply.send(result);
     // });
 
-    // app.get('/meals/:id', function(request, reply) {
-    //     const idContainer = request.params as {id: string};
-    //     const mealID = idContainer.id;
+    app.get('/meals/:id', async function(request, reply) {
+        const idContainer = request.params as {id: number};
+        const mealID = idContainer.id;
+        const meal = await app.db.getMealById(mealID);
 
-    //     const ids = mealList.filter((meal) => {
-    //         if (meal.idMeal) {
-    //             return meal.idMeal == mealID;
-    //         }
-    //     });
+        reply.send(meal);
+    });
 
-    //     reply.send(ids);
-    // });
 
-    // app.get('/categories', function(request, reply) {
-    //     let catByKey: Record <string, string> = {}
-    //     for (let meal of mealList) {
-    //         const category = meal.strCategory;
-    //         if (category) {
-    //             catByKey[category] = category;
-    //         }
-    //     }
-    //     const categories = Object.keys(catByKey).sort();
+    app.get('/categories', async function(_, reply) {
+        const dbResult = await app.db.getMealCategories();
+        const categories = dbResult.map((entries) => entries.category)
 
-    //     reply.send(categories);
-    // });
+        reply.send(categories);
+    });
 
-    app.get('/ingredients', async function (request, reply) {
+
+    app.get('/ingredients', async function (_, reply) {
         const ingredients = await app.db.getIngredients();
 
         reply.send(ingredients);
     });
 
+
     app.get('/image/:id', function (request, reply) {
         const idContainer = request.params as { id: string };
         const mealID = idContainer.id;
-        return reply.sendFile(`${mealID}.jpg`)
-    });
 
+        const t = `${mealID}.jpg`;
+        console.log(t);
+
+        return reply.sendFile(t)
+    });
 }
