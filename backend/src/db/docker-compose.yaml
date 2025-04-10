@@ -2,11 +2,13 @@ services:
   db:
     image: "mysql:${TAG}"
     env_file:
-      - .db-env
+      - .env
     container_name: "${HOST}"
     ports:
       - "${PORT_A}:${PORT_B}"
     environment:
+      MYSQL_USER: "${DB_USER}"
+      MYSQL_PASSWORD: "${DB_PWD}"
       MYSQL_ROOT_PASSWORD: "${ROOTPWD}"
       MYSQL_DATABASE: "${DB_NAME}"
     volumes:
