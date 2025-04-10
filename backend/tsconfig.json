@@ -5,9 +5,11 @@
       ],
       "baseUrl": "src",
       "paths": {
-         "@entity/*": ["entity/*"],
-         "@migration/*": ["migration/*"],
          "@db/*": ["db/*"],
+         "@routes/*": ["routes/*"],
+         "@entity/*": ["entity/*"],
+         "@plugins/*": ["plugins/*"],
+         "@migration/*": ["migration/*"],
       },
       "target": "es2021",
       "module": "commonjs",
@@ -15,6 +17,7 @@
       "outDir": "./build",
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
-      "sourceMap": true
+      "sourceMap": true,
+      "resolveJsonModule": true,
    }
 }
