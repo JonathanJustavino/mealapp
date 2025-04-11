@@ -10,7 +10,7 @@ import { NavbarRoutes } from '../model/navbar-routes.model';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'gogogo';
+  title = 'Meals';
   availableRoutes: NavbarRoutes[] = [
     {name: "home", href: "/"},
     {name: "meals", href: "/meals"},
