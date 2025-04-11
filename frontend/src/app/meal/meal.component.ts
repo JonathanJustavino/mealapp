@@ -17,20 +17,20 @@ export class MealComponent {
   isLiked$: Observable<boolean>
   liked: boolean = false;
   likeBtnLabel$: Observable<string>;
-  @Output() like = new EventEmitter<string>();
-  @Output() dislike = new EventEmitter<string>();
+  @Output() like = new EventEmitter<number>();
+  @Output() dislike = new EventEmitter<number>();
 
   toggleLike() {
     if(this.liked) {
-      this.dislike.emit(this.meal.idMeal!);
+      this.dislike.emit(this.meal.id!);
       return
     }
-    this.like.emit(this.meal.idMeal!);
+    this.like.emit(this.meal.id!);
   }
 
   constructor(private store: Store) {
     this.isLiked$ = this.store.select(mealFeature.selectLiked).pipe(
-      map((likedList) => likedList.includes(this.meal?.idMeal ?? ""))
+      map((likedList) => likedList.includes(this.meal?.id ?? ""))
     );
     this.likeBtnLabel$ = this.isLiked$.pipe(
       map((likedStatus) => likedStatus ? "dislike" : "like")

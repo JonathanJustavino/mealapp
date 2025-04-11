@@ -35,9 +35,9 @@ export const mealPageReducer = createReducer(
             newPool[mealId] = oldPool[mealId];
         });
 
-        const visibleOnPage: string[] = [];
+        const visibleOnPage: number[] = [];
         meals.forEach((meal) => {
-            const mealId = meal.idMeal!
+            const mealId = meal.id!
             newPool[mealId] = meal;
             visibleOnPage.push(mealId)
         });
@@ -55,7 +55,7 @@ export const mealPageReducer = createReducer(
         if (currentlyLiked.find((id) => id === mealId)) {
             return state
         }
-        
+
         return {
             ...state,
             liked: [...currentlyLiked, mealId]
@@ -63,7 +63,7 @@ export const mealPageReducer = createReducer(
     }),
     on(MealActions.disliked, (state, { mealId }) => {
         const removed = state.liked.filter((id) => id !== mealId);
-        
+
         return {
             ...state,
             liked: removed,
@@ -82,7 +82,7 @@ export const mealFeature = createFeature({
             selectMealPool,
             selectVisible,
             selectLiked,
-            (mealPool: Record<string, Meal>, visible: string[], liked: ReadonlyArray<string>) => {
+            (mealPool: Record<string, Meal>, visible: number[], liked: ReadonlyArray<number>) => {
                 if(!mealPool || !visible) {
                     return [];
                 }
@@ -94,7 +94,7 @@ export const mealFeature = createFeature({
         selectLikedMeals: createSelector(
             selectMealPool,
             selectLiked,
-            (mealPool: Record<string, Meal>, liked: string[]) => {
+            (mealPool: Record<number, Meal>, liked: number[]) => {
                 if(!mealPool || !liked) {
                     return [];
                 }

@@ -1,76 +1,65 @@
 export class Meal {
-    idMeal?: string
-    strMeal?: string
-    strDrinkAlternate?: string
-    strCategory?: string
-    strArea?: string
-    strInstructions?: string
-    strMealThumb?: string
-    strTags?: string
-    strYoutube?: string
-    strIngredient1?: string
-    strIngredient2?: string
-    strIngredient3?: string
-    strIngredient4?: string
-    strIngredient5?: string
-    strIngredient6?: string
-    strIngredient7?: string
-    strIngredient8?: string
-    strIngredient9?: string
-    strIngredient10?: string
-    strIngredient11?: string
-    strIngredient12?: string
-    strIngredient13?: string
-    strIngredient14?: string
-    strIngredient15?: string
-    strIngredient16?: string
-    strIngredient17?: string
-    strIngredient18?: string
-    strIngredient19?: string
-    strIngredient20?: string
-    strMeasure1?: string
-    strMeasure2?: string
-    strMeasure3?: string
-    strMeasure4?: string
-    strMeasure5?: string
-    strMeasure6?: string
-    strMeasure7?: string
-    strMeasure8?: string
-    strMeasure9?: string
-    strMeasure10?: string
-    strMeasure11?: string
-    strMeasure12?: string
-    strMeasure13?: string
-    strMeasure14?: string
-    strMeasure15?: string
-    strMeasure16?: string
-    strMeasure17?: string
-    strMeasure18?: string
-    strMeasure19?: string
-    strMeasure20?: string
-    strSource?: string
-    strImageSource?: string
-    strCreativeCommonsConfirmed?: string
-    dateModified?: string
+    id: number
+    legacy_id: number
+    name: string
+    instructions: string
+    thumbnail: string
+    youtube: string
+    area: string
+    category: string
+    source: string
+    tags: string[]
+    ingredients?: string[]
 
-    constructor(data?: Partial<Meal>) {
-        if (data) {
-            Object.assign(this, data);
+    constructor(
+        { id,
+          legacy_id,
+          name,
+          instructions,
+          thumbnail,
+          youtube,
+          area,
+          category,
+          source,
+          tags
+        }:
+        { id: number,
+          legacy_id: number,
+          name: string,
+          instructions: string,
+          thumbnail: string,
+          youtube: string,
+          area: string,
+          category: string,
+          source: string,
+          tags: string[]
         }
+    ) {
+        this.id = id;
+        this.legacy_id = legacy_id;
+        this.name = name;
+        this.instructions = instructions;
+        this.thumbnail = thumbnail;
+        this.youtube = youtube;
+        this.area = area;
+        this.category = category;
+        this.source = source;
+        this.tags = tags;
     }
 }
 
 export function mapBackendMealToFrontend(backendMeal: any): Meal {
     const meal = new Meal({
-        idMeal: `${backendMeal.meal_themeal_debug_id}`,
-        strMeal: backendMeal.meal_name,
-        strInstructions: backendMeal.meal_instructions,
-        strMealThumb: `http://localhost:3000/image/${backendMeal.meal_themeal_debug_id}`,
-        strYoutube: backendMeal.meal_youtubeLink,
-        strArea: backendMeal.meal_area,
-        strCategory: backendMeal.meal_category,
-        strSource: backendMeal.meal_source_uri,
-        strTags: backendMeal.meal_tags?.map((tag: any) => tag.name).join(','),
+        id: backendMeal.meal_id,
+        legacy_id: backendMeal.meal_themeal_debug_id,
+        name: backendMeal.meal_name,
+        instructions: backendMeal.meal_instructions,
+        thumbnail: `http://localhost:3000/image/${backendMeal.meal_themeal_debug_id}`,
+        youtube: backendMeal.meal_youtubeLink,
+        area: backendMeal.meal_area,
+        category: backendMeal.meal_category,
+        source: backendMeal.meal_source_uri,
+        tags: backendMeal.meal_tags,
     });
 
     return meal;

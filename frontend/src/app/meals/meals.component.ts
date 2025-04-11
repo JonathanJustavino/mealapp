@@ -46,11 +46,11 @@ export class MealsComponent {
     })
   }
 
-  onLike(mealId: string) {
+  onLike(mealId: number) {
     this.store.dispatch(MealActions.liked({ mealId }));
   }
 
-  onDisLike(mealId: string) {
+  onDisLike(mealId: number) {
     this.store.dispatch(MealActions.disliked({ mealId }));
   }
 

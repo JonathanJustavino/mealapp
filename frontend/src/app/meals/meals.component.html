@@ -10,8 +10,8 @@
         </div>
         <div class="grid grid-cols-3 gap-4 mb-8">
             <!-- //NOTE richtige id tracken -->
-            @for (meal of mealList$ | async; track meal.idMeal) {
-                <app-meal (like)="onLike(meal.idMeal!)" (dislike)="onDisLike(meal.idMeal!)" [meal]="meal"></app-meal>
+            @for (meal of mealList$ | async; track meal.id) {
+                <app-meal (like)="onLike(meal.id!)" (dislike)="onDisLike(meal.id!)" [meal]="meal"></app-meal>
             }
         </div>
     </div>
