@@ -65,7 +65,7 @@ export function mapBackendMealToFrontend(backendMeal: any): Meal {
         idMeal: `${backendMeal.meal_themeal_debug_id}`,
         strMeal: backendMeal.meal_name,
         strInstructions: backendMeal.meal_instructions,
-        strMealThumb: backendMeal.meal_thumbnail,
+        strMealThumb: `http://localhost:3000/image/${backendMeal.meal_themeal_debug_id}`,
         strYoutube: backendMeal.meal_youtubeLink,
         strArea: backendMeal.meal_area,
         strCategory: backendMeal.meal_category,
