@@ -4,6 +4,7 @@ import { Tag } from "@entity/Tag";
 import { Ingredient } from "@entity/Ingredient";
 import { DbClient } from "@db/db-client";
 import { mealMappings } from "./mealMappings";
+import { colorize, ColorText } from "util/logger";
 
 
 const data: any = raw;
@@ -47,7 +48,7 @@ export async function initializeDB(db: DbClient) {
 
     const notEmpty = await db.getMealCount();
     if(notEmpty) {
-        console.log("DB not empty, skipping initialization...")
+        console.log(colorize("DB not empty, skipping initialization...", ColorText.CYAN));
         return
     }
 

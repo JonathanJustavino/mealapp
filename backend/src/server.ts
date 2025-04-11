@@ -7,6 +7,7 @@ import { CorsOptions } from './cors.option';
 import { mealRoutes } from '@routes/mealRoutes';
 import { AppDataSource } from '@db/data-source';
 import { initializeDB } from '@migration/initial';
+import { colorize, ColorText } from 'util/logger';
 
 
 /**
@@ -25,7 +26,7 @@ async function startup() {
 
         app.register(fastifyStatic, {
             root: path.join(rootPath, 'public/assets'),
-            prefix: '/public/',
+            prefix: '/image/',
             setHeaders: (res) => {
                 res.setHeader("Access-Control-Allow-Origin", "*");
             },
@@ -38,6 +39,8 @@ async function startup() {
         await app.ready();
 
         await initializeDB(app.db);
+
+        console.log(colorize("DB Connection established", ColorText.YELLOW));
 
 
         app.listen({port: 3000}, function (err, address) { });
