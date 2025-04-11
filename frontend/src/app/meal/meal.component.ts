@@ -14,34 +14,34 @@ import { CommonModule } from '@angular/common';
 })
 export class MealComponent {
   @Input() meal!: Meal;
-  // isLiked$: Observable<boolean>
+  isLiked$: Observable<boolean>
   liked: boolean = false;
-  // likeBtnLabel$: Observable<string>;
-  // @Output() like = new EventEmitter<string>();
-  // @Output() dislike = new EventEmitter<string>();
+  likeBtnLabel$: Observable<string>;
+  @Output() like = new EventEmitter<string>();
+  @Output() dislike = new EventEmitter<string>();
 
   toggleLike() {
-    // if(this.liked) {
-    //   this.dislike.emit(this.meal.idMeal!);
-    //   return
-    // }
-    // this.like.emit(this.meal.idMeal!);
+    if(this.liked) {
+      this.dislike.emit(this.meal.idMeal!);
+      return
+    }
+    this.like.emit(this.meal.idMeal!);
   }
 
   constructor(private store: Store) {
-    // this.isLiked$ = this.store.select(mealFeature.selectLiked).pipe(
-    //   map((likedList) => likedList.includes(this.meal?.idMeal ?? ""))
-    // );
-    // this.likeBtnLabel$ = this.isLiked$.pipe(
-    //   map((likedStatus) => likedStatus ? "dislike" : "like")
-    // );
+    this.isLiked$ = this.store.select(mealFeature.selectLiked).pipe(
+      map((likedList) => likedList.includes(this.meal?.idMeal ?? ""))
+    );
+    this.likeBtnLabel$ = this.isLiked$.pipe(
+      map((likedStatus) => likedStatus ? "dislike" : "like")
+    );
   }
 
   ngOnInit() {
     //TODO: subscribing in constructor is error prone, since input data could not
-    // this.isLiked$.subscribe((likedStatus) => {
-    //   this.liked = likedStatus
-    // });
+    this.isLiked$.subscribe((likedStatus) => {
+      this.liked = likedStatus
+    });
   }
 
 }
