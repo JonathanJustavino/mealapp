@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
 })
 export class HomepageComponent {
   title = "Welcome to the Meal App";
-  homeImgSrc = "homepage-image.jpg";
+  homeImgSrc = "homepage-img.png";
 }
