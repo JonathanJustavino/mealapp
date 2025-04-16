@@ -1,0 +1,53 @@
+services:
+  db:
+    image: "mysql:${TAG}"
+    env_file:
+      - .env
+    container_name: "${HOST}"
+    ports:
+      - "${PORT_EXT}:${PORT_INT}"
+    environment:
+      MYSQL_USER: "${DB_USER}"
+      MYSQL_PASSWORD: "${DB_PWD}"
+      MYSQL_ROOT_PASSWORD: "${ROOTPWD}"
+      MYSQL_DATABASE: "${DB_NAME}"
+    volumes:
+      - "${MYSQLPATH}:/var/lib/mysql"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 20s
+      retries: 5
+      start_period: 30s
+
+  backend:
+    container_name:  "${BE_NAME}"
+    build:
+      context: ./backend
+    ports:
+      - "${BE_PORT_EXT}:${BE_PORT_INT}"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+
+  frontend:
+    container_name:  "${FE_NAME}"
+    build:
+      context: ./frontend
+    ports:
+      - "${FE_PORT_EXT}:${FE_PORT_INT}"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true

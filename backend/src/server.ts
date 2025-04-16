@@ -42,9 +42,9 @@ async function startup() {
 
         console.log(colorize("DB Connection established", ColorText.YELLOW));
 
-
-        app.listen({port: 3000}, function (err, address) { });
-        app.log.info("Server running on http://localhost:3000");
+        const dockerHost = "0.0.0.0";
+        app.listen({port: 3000, host: dockerHost}, function (err, address) { });
+        app.log.info(`Server running on http://${dockerHost}:3000`);
     } catch (error) {
         app.log.error(error);
         process.exit(1);

@@ -1,5 +1,4 @@
 **/node_modules/
 **/venv/
-backend/src/db/.db-env
-backend/src/db/.env
+.env
 backend/src/db/data/*
