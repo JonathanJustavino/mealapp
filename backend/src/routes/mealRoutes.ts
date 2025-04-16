@@ -18,11 +18,10 @@ export async function mealRoutes(app: FastifyInstance) {
 
     app.get('/meals', async function (request, reply) {
         const query = request.query as { page: number, limit: number };
-        const pageParam = query.page;
-        const limitParam = query.limit;
+        const pageParam = query.page ?? 1;
+        const limitParam = query.limit ?? 1;
 
         const meals = await app.db.getMealPage(pageParam, limitParam);
-        console.log(meals)
         reply.send(meals);
     });
 
