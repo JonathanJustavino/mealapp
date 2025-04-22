@@ -7,13 +7,7 @@ import { Meal } from '@entity/Meal';
 import { Tag } from '@entity/Tag';
 import { Ingredient } from '@entity/Ingredient';
 
-
-const ENV_PATH = path.resolve(__dirname, '.env');
-console.log(ENV_PATH);
-dotenv.config({path: path.resolve(__dirname, ENV_PATH)});
-
-const port = parseInt(process.env.PORT_A!);
-
+const port = parseInt(process.env.BE_PORT_INT!);
 
 export const AppDataSource = new DataSource({
     type: "mysql",

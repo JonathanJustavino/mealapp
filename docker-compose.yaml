@@ -31,6 +31,11 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
+      - DB_HOST=${DB_HOST}
+      - DB_PWD=${DB_PWD}
+      - DB_USER=${DB_USER}
+      - DB_NAME=${DB_NAME}
+      - PORT_EXT=${PORT_EXT}
     depends_on:
       db:
         condition: service_healthy
