@@ -6,5 +6,6 @@ export const MealActions = createActionGroup({
     events: {
         'Liked': props<{mealId: number}>(),
         'Disliked': props<{mealId: number}>(),
+        'Selected': props<{mealId: number | undefined}>(),
     }
 });

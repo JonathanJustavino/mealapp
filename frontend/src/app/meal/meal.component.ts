@@ -19,14 +19,7 @@ export class MealComponent {
   likeBtnLabel$: Observable<string>;
   @Output() like = new EventEmitter<number>();
   @Output() dislike = new EventEmitter<number>();
-
-  toggleLike() {
-    if(this.liked) {
-      this.dislike.emit(this.meal.id!);
-      return
-    }
-    this.like.emit(this.meal.id!);
-  }
+  @Output() select = new EventEmitter<void>();
 
   constructor(private store: Store) {
     this.isLiked$ = this.store.select(mealFeature.selectLiked).pipe(
@@ -37,11 +30,24 @@ export class MealComponent {
     );
   }
 
+  toggleLike() {
+    if(this.liked) {
+      this.dislike.emit(this.meal.id!);
+      return
+    }
+    this.like.emit(this.meal.id!);
+  }
+
+
   ngOnInit() {
     //TODO: subscribing in constructor is error prone, since input data could not
     this.isLiked$.subscribe((likedStatus) => {
       this.liked = likedStatus
     });
+  }
+
+  onSelect() {
+    this.select.emit();
   }
 
 }

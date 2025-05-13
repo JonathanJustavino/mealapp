@@ -11,7 +11,8 @@ export const initialState: MealPageFeatureState = {
     liked: [],
     isLoading: false,
     success: false,
-    currentPage: 0
+    currentPage: 0,
+    detailViewedMealId: undefined
 }
 
 
@@ -68,7 +69,13 @@ export const mealPageReducer = createReducer(
             ...state,
             liked: removed,
         }
-    })
+    }),
+    on(MealActions.selected, (state, { mealId }) => {
+        return {
+            ...state,
+            detailViewedMealId: mealId,
+        }
+    }),
 );
 
 
@@ -77,7 +84,7 @@ export const mealFeatureKey = "mealFeature";
 export const mealFeature = createFeature({
     name: mealFeatureKey,
     reducer: mealPageReducer,
-    extraSelectors: ({selectMealPool, selectVisible, selectLiked}) => ({
+    extraSelectors: ({selectMealPool, selectVisible, selectLiked, selectDetailViewedMealId}) => ({
         selectMealsOnPage: createSelector(
             selectMealPool,
             selectVisible,
@@ -102,6 +109,16 @@ export const mealFeature = createFeature({
                 const likedMeals = liked.map((mealId) =>  mealPool[mealId]);
 
                 return likedMeals;
+            }
+        ),
+        selectDetailViewedMeal: createSelector(
+            selectMealPool,
+            selectDetailViewedMealId,
+            (mealPool: Record<number, Meal>, detailViewedMealId: number | undefined) => {
+                if (!detailViewedMealId) {
+                    return undefined
+                }
+                return mealPool[detailViewedMealId];
             }
         ),
     }),

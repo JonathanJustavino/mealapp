@@ -31,6 +31,7 @@ export function getInitialState(initialState: MealPageFeatureState): MealPageFea
                 isLoading: false,
                 success: true,
                 currentPage: mealPageFeatureState.currentPage,
+                detailViewedMealId: undefined
             }
 
 
@@ -44,4 +45,4 @@ export function getInitialState(initialState: MealPageFeatureState): MealPageFea
 }
 
 export const metaReducers: MetaReducer<any>[] = [localStorageSyncReducer]
-export const defaultmealPageFeatureState = {mealPool: {}, visible: [], liked: [], isLoading: false, success: true, currentPage: 0}
+export const defaultmealPageFeatureState = { mealPool: {}, visible: [], liked: [], isLoading: false, success: true, currentPage: 0, detailViewedMealId: undefined }

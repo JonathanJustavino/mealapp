@@ -1,5 +1,11 @@
-<div class="text-center flex flex-col justify-center items-center space-y-1">
-    <h2 class="w-full capitalize text-center text-lg whitespace-nowrap overflow-hidden text-ellipsis" bg-red-500>{{meal.name}}</h2>
-    <img class="mt-2 rounded-md w-64 h-64" [src]="meal.thumbnail">
-    <button (click)="toggleLike()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{{likeBtnLabel$ | async}}</button>
+<div class="meal-container">
+    <!-- <div class="flex flex-col justify-center items-center space-y-1"> -->
+    <div class="grid">
+        <div class="selectable-area" (click)="onSelect()">
+            <!-- <h2 class="w-full capitalize text-center text-lg whitespace-nowrap overflow-hidden text-ellipsis">{{meal.name}}</h2> -->
+            <h2 class="capitalize text-center text-lg text-ellipsis">{{meal.name}}</h2>
+            <img class="mx-auto my-2 rounded-md w-64 h-64" [src]="meal.thumbnail">
+        </div>
+        <button (click)="toggleLike(); $event.stopPropagation()" class="mx-55 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{{likeBtnLabel$ | async}}</button>
+    </div>
 </div>

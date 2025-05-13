@@ -7,4 +7,5 @@ export interface MealPageFeatureState {
     isLoading: boolean
     success: boolean
     currentPage: number
+    detailViewedMealId: number | undefined
 }

@@ -9,10 +9,17 @@
             }
         </div>
         <div class="grid grid-cols-3 gap-4 mb-8">
-            <!-- //NOTE richtige id tracken -->
             @for (meal of mealList$ | async; track meal.id) {
-                <app-meal (like)="onLike(meal.id!)" (dislike)="onDisLike(meal.id!)" [meal]="meal"></app-meal>
+                <app-meal class=""
+                 [meal]="meal"
+                 (like)="onLike(meal.id!)"
+                 (dislike)="onDisLike(meal.id!)"
+                 (click)="onSelect(meal.id)"></app-meal>
             }
         </div>
+        @if(detailViewedMeal$ | async; as detailedMeal) {
+            {{detailViewedMeal$}}
+            <app-details (cancelDetailView)="onCancelDetailView()" [meal]="detailedMeal"></app-details>
+        }
     </div>
 }
