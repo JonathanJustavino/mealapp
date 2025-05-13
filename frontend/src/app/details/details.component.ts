@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Meal } from '../../model/meal.model';
+import { ClickOutsideDirective } from '../click-outside.directive';
 
 @Component({
   selector: 'app-details',
-  imports: [],
+  imports: [ClickOutsideDirective],
   templateUrl: './details.component.html',
   styleUrl: './details.component.css'
 })

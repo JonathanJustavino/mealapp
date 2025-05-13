@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { MealsService } from '../service/meals.service';
-import { Observable, take } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Meal } from '../../model/meal.model';
 import { CommonModule } from '@angular/common';
 import { MealComponent } from '../meal/meal.component';
@@ -12,7 +12,10 @@ import { DetailsComponent } from '../details/details.component';
 
 @Component({
   selector: 'app-meals',
-  imports: [CommonModule, MealComponent, DetailsComponent],
+  imports: [CommonModule,
+    MealComponent,
+    DetailsComponent,
+  ],
   templateUrl: './meals.component.html',
   styleUrl: './meals.component.css',
   providers: [MealsService]
